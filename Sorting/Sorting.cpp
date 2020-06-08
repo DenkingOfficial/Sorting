@@ -91,10 +91,33 @@ void Print(int* array, int num)
 {
 	cout << "First " << num << " elements : ";
 	for (int i = 0; i < num; ++i)
-	{
 		cout << array[i] << " ";
-	}
 	cout << endl;
+}
+
+int Partition(int* array, int start, int end)
+{
+	int x = array[end];
+	int i = start - 1;
+
+	for (int j = start; j <= end - 1; j++)
+		if (array[j] <= x)
+		{
+			i++;
+			Swap(&array[i], &array[j]);
+		}
+	Swap(&array[i + 1], &array[end]);
+	return (i + 1);
+}
+
+void RecursiveQuickSort(int* array, int start, int end)
+{
+	if (start < end)
+	{
+		int q = Partition(array, start, end);
+		RecursiveQuickSort(array, start, q - 1);
+		RecursiveQuickSort(array, q + 1, end);
+	}
 }
 
 int main()
@@ -107,4 +130,9 @@ int main()
 	Print(testQuickSort, 50);
 	QuickSort(testQuickSort, 100);
 	Print(testQuickSort, 50);
+	int quickSortCheckRecursive[100];
+	FillArrayRnd(quickSortCheckRecursive, 100, -10, 10);
+	Print(quickSortCheckRecursive, 50);
+	RecursiveQuickSort(quickSortCheckRecursive, 0, 99);
+	Print(quickSortCheckRecursive, 50);
 }
