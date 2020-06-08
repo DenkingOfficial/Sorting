@@ -3,6 +3,7 @@
 #include <string>
 #include <ctime>
 #include <iomanip>
+#include <chrono>
 
 using namespace std;
 
@@ -163,8 +164,30 @@ int main()
 	RecursiveQuickSort(quickSortCheckRecursive, 0, 99);
 	Print(quickSortCheckRecursive, 50);
 	int binarySearchCheck[] = { 1, 2, 3, 4, 5, 6, 7, 8, 9, 10 };
-	cout << "Binary search result: " << BinarySearch(binarySearchCheck, 5, 1, 8)
-		<< endl;
-	cout << "Recursive binary search result: "
-		<< RecursiveBinarySearch(binarySearchCheck, 7, 0, 6) << endl;
+	cout << "Binary search result: " << BinarySearch(binarySearchCheck, 5, 1, 8) << endl;
+	cout << "Recursive binary search result: " << RecursiveBinarySearch(binarySearchCheck, 7, 0, 6) << endl;
+	int timeComparsionTestArray[100];
+	FillArrayRnd(timeComparsionTestArray, 100, -10, 10);
+	auto startTimeLS = chrono::steady_clock::now();
+	Search(timeComparsionTestArray, 100, 6);
+	auto endTimeLS = chrono::steady_clock::now();
+	auto startTimeBS = chrono::steady_clock::now();
+	BinarySearch(timeComparsionTestArray, 6, 0, 100);
+	auto endTimeBS = chrono::steady_clock::now();
+	auto startTimeRBS = chrono::steady_clock::now();
+	RecursiveBinarySearch(timeComparsionTestArray, 6, 0, 100);
+	auto endTimeRBS = chrono::steady_clock::now();
+	QuickSort(timeComparsionTestArray, 100);
+	auto startTimeLSS = chrono::steady_clock::now();
+	Search(timeComparsionTestArray, 100, 6);
+	auto endTimeLSS = chrono::steady_clock::now();
+	auto timeLS = chrono::duration_cast<chrono::nanoseconds>(endTimeLS - startTimeLS);
+	auto timeBS = chrono::duration_cast<chrono::nanoseconds>(endTimeBS - startTimeBS);
+	auto timeRBS = chrono::duration_cast<chrono::nanoseconds>(endTimeRBS - startTimeRBS);
+	auto timeLSS = chrono::duration_cast<chrono::nanoseconds>(endTimeLSS - startTimeLSS);
+	cout << "Linear search time: " << timeLS.count() << " ns" << endl;
+	cout << "Binary search time: " << timeBS.count() << " ns" << endl;
+	cout << "Recursive binary search time: " << timeRBS.count() << " ns" << endl;
+	cout << "Sorted linear search time: " << timeLSS.count() << " ns" << endl;
+	return 0;
 }
