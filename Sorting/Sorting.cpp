@@ -120,6 +120,21 @@ void RecursiveQuickSort(int* array, int start, int end)
 	}
 }
 
+int BinarySearch(const int* array, int value, int left, int right)
+{
+	while (right >= left)
+	{
+		int mid = (right + left) / 2;
+		if (array[mid] == value)
+			return mid;
+		if (array[mid] > value)
+			right = mid;
+		if (array[mid] < value)
+			left = mid + 1;
+	}
+	return -1;
+}
+
 int main()
 {
 	int searchCheck[1000];
@@ -135,4 +150,7 @@ int main()
 	Print(quickSortCheckRecursive, 50);
 	RecursiveQuickSort(quickSortCheckRecursive, 0, 99);
 	Print(quickSortCheckRecursive, 50);
+	int binarySearchCheck[] = { 1, 2, 3, 4, 5, 6, 7, 8, 9, 10 };
+	cout << "Binary search result: " << BinarySearch(binarySearchCheck, 5, 1, 8)
+		<< endl;
 }
