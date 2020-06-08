@@ -135,6 +135,18 @@ int BinarySearch(const int* array, int value, int left, int right)
 	return -1;
 }
 
+int RecursiveBinarySearch(int* array, int value, int left, int right)
+{
+	int mid = (right + left) / 2;
+	if (array[mid] == value)
+		return mid;
+	if (array[mid] > value)
+		return RecursiveBinarySearch(array, value, left, mid);
+	if (array[mid] < value)
+		return RecursiveBinarySearch(array, value, mid + 1, right);
+	return -1;
+}
+
 int main()
 {
 	int searchCheck[1000];
@@ -153,4 +165,6 @@ int main()
 	int binarySearchCheck[] = { 1, 2, 3, 4, 5, 6, 7, 8, 9, 10 };
 	cout << "Binary search result: " << BinarySearch(binarySearchCheck, 5, 1, 8)
 		<< endl;
+	cout << "Recursive binary search result: "
+		<< RecursiveBinarySearch(binarySearchCheck, 7, 0, 6) << endl;
 }
